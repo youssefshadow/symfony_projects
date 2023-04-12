@@ -3,10 +3,19 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-{% set test = 2 %}
-{% if test == 3 %}
-{{test}}
-{% elseif test == 2 %}
-<h1> Looser</h1>
-{% endif %}
+ {# {% set nbr1 = 10 %}
+    {% set nbr2 = 20 %} #}
+
+    {% if nbr1 > nbr2 %}
+        {{ nbr1 }} est plus grand que {{nbr2}}
+    {% elseif nbr2 > nbr1 %}
+        {{ nbr2 }} est plus grand  {{ nbr1 }}
+    {% elseif nbr1 == 0 or nbr2 == 0 %}
+        {% if nbr1 == 0 %}
+            {{ nbr1 }} est égal à zéro
+        {% endif %}
+        {% if nbr2 == 0 %}
+            {{ nbr2 }} est égal à zéro
+        {% endif %}
+    {% endif %}
 {% endblock %}
