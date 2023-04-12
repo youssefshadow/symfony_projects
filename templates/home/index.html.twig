@@ -3,5 +3,10 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-
+{% set test = 2 %}
+{% if test == 3 %}
+{{test}}
+{% elseif test == 2 %}
+<h1> Looser</h1>
+{% endif %}
 {% endblock %}
