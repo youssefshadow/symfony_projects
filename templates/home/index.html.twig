@@ -3,19 +3,20 @@
 {% block title %}{% endblock %}
 
 {% block body %}
- {# {% set nbr1 = 10 %}
-    {% set nbr2 = 20 %} #}
-
-    {% if nbr1 > nbr2 %}
-        {{ nbr1 }} est plus grand que {{nbr2}}
-    {% elseif nbr2 > nbr1 %}
-        {{ nbr2 }} est plus grand  {{ nbr1 }}
-    {% elseif nbr1 == 0 or nbr2 == 0 %}
-        {% if nbr1 == 0 %}
-            {{ nbr1 }} est égal à zéro
-        {% endif %}
-        {% if nbr2 == 0 %}
-            {{ nbr2 }} est égal à zéro
+    {# {% set nbr1 = 0 %}
+    {% set nbr2 = 50 %} #}
+    <p> Comparez les deux nombres </p>
+    {% if nbr1 is defined == 0 %}
+       le nombre 1 est égal à zéro
+    {% elseif nbr2 is defined == 0 %}
+        le nombre 2 est égal à zéro
+    {% else %}
+        {% if nbr1 is defined > nbr2 is defined %}
+            {{ nbr1 }} est plus grand que {{ nbr2 }}
+        {% elseif nbr2 > nbr1 %}
+            {{ nbr2 }} est plus grand que {{ nbr1 }}
+        {% else %}
+            Les deux nombres sont égaux
         {% endif %}
     {% endif %}
 {% endblock %}
