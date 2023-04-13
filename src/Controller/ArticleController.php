@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\ArticleRepository;
 
 class ArticleController extends AbstractController
 {
@@ -16,16 +17,12 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/article/all', name:'app_article_all')]
-    public function showArticles():Response{
-        //tableau indexe
-        $article = ['Nouveau film', 'Contenu du nouveau film', 120];
-        //tableau associatif
-        $articles = [['titre'=> 'John Wick', 'contenu'=>'C\'est un film d\'action', 'duree'=> 140],
-                    ['titre'=> 'autre', 'contenu'=>'C\'est un autre film', 'duree'=> 120]
-        ];
+    public function showArticles(ArticleRepository $articleRepository):Response{
+        //Récupérer des article avec un tableau 
+        $articles =$articleRepository->findAll();
+        #dd($articles);
         return $this->render('article/index2.html.twig', [
-            'film'=> $article,
-            'films' => $articles,
+           'liste'=>$articles,
         ]);
     }
 }
