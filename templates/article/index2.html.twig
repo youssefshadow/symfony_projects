@@ -8,7 +8,7 @@
 {% block title %}Article{% endblock %}
 
 {% block body %}
-{% include 'component/heroArticle.html.twig' %}
+
   <h1> Nos Articles </h1>
   {% for article in liste %}
   <section class="card_container">
@@ -18,7 +18,8 @@
   <p>{{article.id}}</p>
   <p>{{article.contenu}}</p>
   <p>{{article.date | date('Y-m-d')}}</p>
-  <p>{{article.user}}</p>
+  <a href="./id/{{ article.id }}"> En savoir plus</a>
+  {# <a href="{{ path('app_article_id', {'id': article.id }) }}"> lien</a> #}
   </div>
   </section>
 

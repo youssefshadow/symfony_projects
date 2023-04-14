@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+<section class="card_container">
+    <div class="card">
+    <h1>{{ article.titre }}</h1>
+    <p>{{ article.contenu }}</p>
+    <p>Publié le {{article.date | date('Y-m-d')}}</p>
+    <h3>Catégories :</h3>
+    <ul>
+        {% for categorie in article.categories %}
+            <li>{{ categorie.nom }}</li>
+        {% endfor %}
+    </ul>
+    <h3>Auteur :</h3>
+    <p>{{ article.user.nom }}</p>
+    </div>
+</section>
+{% endblock %}
