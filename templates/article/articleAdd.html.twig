@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter Article{% endblock %}
+
+{% block body %}
+    <div class="form-container"> <!-- Appliquer la classe CSS pour le formulaire -->
+        {{ form_start(form) }}
+        <div class="form-group"> <!-- Appliquer la classe CSS pour les champs de texte -->
+            {{ form_label(form.titre, 'Titre', {'label_attr': {'class': 'form-control-label'}}) }} <!-- Appliquer la classe CSS pour les labels des champs -->
+            {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }} <!-- Appliquer la classe CSS pour les champs de texte -->
+        </div>
+        <div class="form-group">
+            {{ form_label(form.contenu, 'Contenu', {'label_attr': {'class': 'form-control-label'}}) }}
+            {{ form_widget(form.contenu, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.date, 'Date', {'label_attr': {'class': 'form-control-label'}}) }}
+            {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.categories, 'Catégories', {'label_attr': {'class': 'form-control-label'}}) }}
+            {{ form_widget(form.categories, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.user, 'Utilisateur', {'label_attr': {'class': 'form-control-label'}}) }}
+            {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        {{ form_widget(form.Ajouter, {'attr': {'class': 'btn btn-primary'}}) }} <!-- Appliquer la classe CSS pour le bouton submit -->
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
