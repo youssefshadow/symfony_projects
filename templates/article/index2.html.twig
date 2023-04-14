@@ -1,12 +1,20 @@
 {% extends 'base.html.twig' %}
+ 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('asset/style/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('asset/style/style.css') }}">
+{% endblock %}
 
 {% block title %}Article{% endblock %}
 
 {% block body %}
+{% include 'component/hero.html.twig' %}
+  <h1> Nos Articles </h1>
   {% for article in liste %}
   <section class="card_container">
+  
   <div class="card">
-  <p>{{article.titre}}</p>
+  <h4>{{article.titre}}</h4>
   <p>{{article.id}}</p>
   <p>{{article.date | date('Y-m-d')}}</p>
   <p>{{article.user}}</p>
@@ -16,4 +24,6 @@
 
 
   {% endfor %}
+ 
+ {# {% include 'component/footer.html.twig' %} #}
 {% endblock %}

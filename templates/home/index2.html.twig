@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
-
+ 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('asset/style/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('asset/style/style.css') }}">
 {% endblock %}
 
+
 {% block title %}Home{% endblock %}
 
 {% block body %}
+{% include 'component/hero.html.twig' %}
+
 
 {% if nbr2 == 0 or nbr1 == 0 %}
     <p>afficher nbr1 ou nbr2 est égal à zéro</p>
@@ -17,4 +20,5 @@
     <p>nbr2  est le nombre le plus grand</p>
 {% endif %} 
 
+{% include 'component/footer.html.twig' %}
 {% endblock %}
