@@ -16,6 +16,7 @@
   <div class="card">
   <h4>{{article.titre}}</h4>
   <p>{{article.id}}</p>
+  <p>{{article.contenu}}</p>
   <p>{{article.date | date('Y-m-d')}}</p>
   <p>{{article.user}}</p>
   </div>
@@ -25,5 +26,5 @@
 
   {% endfor %}
  
- {# {% include 'component/footer.html.twig' %} #}
+ {% include 'component/footer.html.twig' %}
 {% endblock %}
