@@ -4,10 +4,14 @@
 
 {% block body %}
   {% for article in liste %}
+  <section class="card_container">
+  <div class="card">
   <p>{{article.titre}}</p>
   <p>{{article.id}}</p>
   <p>{{article.date | date('Y-m-d')}}</p>
   <p>{{article.user}}</p>
+  </div>
+  </section>
 
 
 

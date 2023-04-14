@@ -12,6 +12,7 @@ h1{
     text-align: center;
     color: gray;
     font-family: Arial, Helvetica, sans-serif;
+    color: red;
  }
  .hero-section {
     height: 80vh;
@@ -49,7 +50,32 @@ h1{
     border-radius: 5px; 
   }
 
-  .active{
-    border-bottom: whithe 2px solid;
-}
   
+
+.card_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: aqua;
+  width: 80%;
+}
+
+.card {
+  width: 20%;
+  margin: 10px;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.card p {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: calc(50% - 20px);
+  }
+}
