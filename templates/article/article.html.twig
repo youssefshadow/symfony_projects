@@ -11,9 +11,9 @@
     <h4>Catégories :</h4>
     <ul>
         {% for categorie in article.categories %}
-        <span class="badge bg-primary"> </span>
+        <span class="badge bg-danger"> </span>
         <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action active"> <li>{{ categorie.nom }}</li></a>
+            <a href="#" class="list-group-item list-group-item-action warning"> <li>{{ categorie.nom }}</li></a>
  
         </div>
           
