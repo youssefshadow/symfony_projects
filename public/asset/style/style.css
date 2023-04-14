@@ -2,6 +2,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    list-style: none;
+}
+a{
+  list-style: none;
 }
 
 h1{
@@ -62,6 +66,7 @@ h4{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin-top: 50px;
   background-color:rgba(34,34,34,255); 
   width: 100%;
 }
@@ -75,6 +80,7 @@ h4{
   box-sizing: border-box;
   text-align: center;
   transition: 0.2s ease-in;
+
 }
 .card:hover{
   transform: scale(1.1);
@@ -108,6 +114,24 @@ h4{
 .footer-social-media i {
   font-size: 20px;
 }
+/* Style de base pour les liens */
+a {
+  color: #007bff; 
+  text-decoration: none;
+  transition: color 0.3s ease-in-out; 
+}
+
+
+a:hover {
+  color: #ff3366; 
+  text-decoration: underline; 
+}
+
+
+a:active {
+  color: #ff3366; 
+}
+
 
 
 @media (max-width: 768px) {

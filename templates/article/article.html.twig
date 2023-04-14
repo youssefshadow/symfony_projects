@@ -8,10 +8,15 @@
     <h1>{{ article.titre }}</h1>
     <p>{{ article.contenu }}</p>
     <p>Publié le {{article.date | date('Y-m-d')}}</p>
-    <h3>Catégories :</h3>
+    <h4>Catégories :</h4>
     <ul>
         {% for categorie in article.categories %}
-            <li>{{ categorie.nom }}</li>
+        <span class="badge bg-primary"> </span>
+        <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action active"> <li>{{ categorie.nom }}</li></a>
+ 
+        </div>
+          
         {% endfor %}
     </ul>
     <h3>Auteur :</h3>
