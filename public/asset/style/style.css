@@ -134,9 +134,16 @@ a:active {
 
 /* Styles pour le formulaire */
 .form-container {
-  width: 80%;
+  width: 60%;
   margin: 0 auto;
+  padding: 20px 20px;
+  border-radius: 15px;
+  margin-top: 30px;
+  border: 1px solid #fff; 
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
+  background-color: #000; 
 }
+
 
 .form-group {
   margin-bottom: 20px;
