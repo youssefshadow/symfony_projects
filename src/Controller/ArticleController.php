@@ -85,5 +85,5 @@ class ArticleController extends AbstractController
             'form'=> $form->createView(),
             'msg'=> $msg,
         ]);
-    }
+}
 }

@@ -6,8 +6,11 @@
   <h1>Liste des catégories</h1>
   <ul>
     {% for categorie in liste %}
-      <li>{{ categorie.nom }}</li>
+      <li>
+        {{ categorie.nom }}
+        <a href="{{ path('app_categorie_update', {'id': categorie.id}) }}">Modifier</a>
+      </li>
     {% endfor %}
   </ul>
-   <a href="{{ path('app_categorie_add') }}">Ajouter une catégorie</a>
+  <a href="{{ path('app_categorie_add') }}">Ajouter une catégorie</a>
 {% endblock %}
