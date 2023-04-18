@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Form;
-
 use App\Entity\Article;
 use App\Entity\User;
 use App\Entity\Categorie;
@@ -19,21 +17,31 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('titre', TextType::class)
+            ->add('titre', TextType::class,[
+                'attr'=>['class'=>'form'],
+                'required'=>true
+            ])
             ->add('contenu', TextareaType::class)
             ->add('date', DateType::class)
             ->add('categories', EntityType::class,
-            array(
+                [
                 // looks for choices from this entity
                 'class' => Categorie::class,
+                'label' => 'Catégories :',
+                'choice_label' => 'nom',
                 'multiple' => true,
                 'expanded' => false,
-                'required' => false)
+                'required' => true
+                ]
             )
-            ->add('user', EntityType::class, array(
+            ->add('user', EntityType::class, 
+                [
                 // looks for choices from this entity
-                'class' => User::class))
-            ->add('Ajouter', SubmitType::class)
+                'class' => User::class,
+                'label' => 'Utilisateurs :'
+                ]
+                )
+            ->add('Envoyer', SubmitType::class)
         ;
     }
 

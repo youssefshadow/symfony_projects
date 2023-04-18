@@ -27,6 +27,8 @@
             {{ form_label(form.user, 'Utilisateur', {'label_attr': {'class': 'form-control-label'}}) }}
             {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
         </div>
-        {{ form_widget(form.Ajouter, {'attr': {'class': 'btn btn-primary'}}) }} 
+        {{ form_widget(form.Envoyer, {'attr': {'class': 'btn btn-primary'}}) }} 
     </div>
+    {{form_end(form)}}
+     <p>{{msg}} <p>
 {% endblock %}
