@@ -6,8 +6,13 @@
     <h1>Ajouter une categorie</h1>
     <div class="form-container">
         {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button type="submit" class="btn btn-primary">Ajouter</button>
+            <div class="form-group">
+                {{ form_label(form.nom) }}
+                {{ form_widget(form.nom) }}
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+            </div>
         {{ form_end(form) }}
         <p>{{msg}} <p>
     </div>

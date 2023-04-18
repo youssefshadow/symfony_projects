@@ -191,8 +191,10 @@ a:active {
 
 
 
+
 @media (max-width: 768px) {
   .card {
     width: calc(50% - 20px);
   }
 }
+
