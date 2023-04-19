@@ -4,13 +4,23 @@
 
 {% block body %}
   <h1>Liste des catégories</h1>
+  <div class="form-container"> 
   <ul>
     {% for categorie in liste %}
-      <li>
-        {{ categorie.nom }}
-        <a href="{{ path('app_categorie_update', {'id': categorie.id}) }}">Modifier</a>
+      <li class="category">
+        <div class="category-text">
+          {{ categorie.nom }}
+        </div>
+        <div class="category-link">
+          <a href="{{ path('app_categorie_update', {'id': categorie.id}) }}">Modifier</a>
+        </div>
+        <div class="category-icon">
+          <a href="{{ path('app_categorie_delete', {'id': categorie.id}) }}"><img class="icon" src="https://img.icons8.com/plasticine/100/null/filled-trash.png"/></a>
+        </div>
       </li>
     {% endfor %}
   </ul>
+  </div>
   <a href="{{ path('app_categorie_add') }}">Ajouter une catégorie</a>
+  
 {% endblock %}

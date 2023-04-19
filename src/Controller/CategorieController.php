@@ -85,5 +85,13 @@ class CategorieController extends AbstractController
             'msg' => $msg,
         ]);
     }
+    #[Route('/categorie/delete/{id}', name:'app_categorie_delete')]
+    public function deleteCategorie(int $id, CategorieRepository $repo,
+    EntityManagerInterface $em){
+        $categorie = $repo->find($id);
+        $em->remove($categorie);
+        $em->flush();
+        return $this->redirectToRoute('app_categorie_all');
+    }
 }
 
