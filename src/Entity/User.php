@@ -40,6 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $prenom = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Article::class)]
+
     private Collection $articles;
 
     public function __construct()

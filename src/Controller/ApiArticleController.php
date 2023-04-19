@@ -10,6 +10,7 @@ use App\Repository\ArticleRepository;
 use App\Entity\Article;
 use App\Service\Utils;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class ApiArticleController extends AbstractController
 {
@@ -33,4 +34,16 @@ class ApiArticleController extends AbstractController
          '*'],['groups'=>'article:readbyId']);
         
     }
-}
+    // #[Route('/api/article/add', name: 'app_api_article_add',methods:'GET')]
+    // public function addArticle(ArticleRepository $repo ,Request $request,SerializerInterface $serialize  ): Response{
+    //      $json = $request->getCContent();
+    //      $data = $serialize->decode($json, 'json');
+    //      dd($json,$data);
+    //      $article->setTitre($data['titre']);
+    //      $article->setContenu($data['contenu']);
+        //  $article->setDate( new \DatteTimeImutable $data['titre']);
+       
+         
+        
+    }
+
