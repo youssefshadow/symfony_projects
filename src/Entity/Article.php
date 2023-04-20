@@ -16,19 +16,19 @@ class Article
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['article:readAll','article:readbyId'])]
+    #[Groups(['article:readAll', 'article:id'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['article:readAll','article:readbyId'])]
+    #[Groups(['article:readAll', 'article:id'])]
     private ?string $titre = null;
 
     #[ORM\Column(type: Types::TEXT)]
-     #[Groups(['article:readAll','article:readbyId'])]
+    #[Groups(['article:readAll', 'article:id'])]
     private ?string $contenu = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups('article:readAll')]
+    #[Groups(['article:readAll', 'article:id'])]
     private ?\DateTimeInterface $date = null;
 
     #[Groups('article:readAll')]
