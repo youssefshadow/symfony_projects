@@ -22,11 +22,11 @@ class ApiArticleController extends AbstractController
         if(empty($articles)){
            // dd('test');
             return $this->json(['erreur'=>'Il n\'y a pas d\'article'], 206, ['Content-Type'=>'application/json',
-            'Access-Control-Allow-Origin'=> 'localhost',
+            'Access-Control-Allow-Origin'=> '*',
             'Access-Control-Allow-Methods'=> 'GET']);
         }
         return $this->json($articles, 200, ['Content-Type'=>'application/json',
-        'Access-Control-Allow-Origin'=> 'localhost',
+        'Access-Control-Allow-Origin'=> '*',
         'Access-Control-Allow-Methods'=> 'GET'], ['groups'=>'article:readAll']);
     }
     #[Route('/api/article/id/{id}', name:'app_api_article_id', methods:'GET')]
@@ -35,11 +35,11 @@ class ApiArticleController extends AbstractController
         if(empty($article)){
            // dd('test');
             return $this->json(['erreur'=>'l\'article n\'existe pas'], 206, ['Content-Type'=>'application/json',
-            'Access-Control-Allow-Origin'=> 'localhost',
+            'Access-Control-Allow-Origin'=> '*',
             'Access-Control-Allow-Methods'=> 'GET']);
         }
         return $this->json($article, 200, ['Content-Type'=>'application/json',
-        'Access-Control-Allow-Origin'=> 'localhost',
+        'Access-Control-Allow-Origin'=> '*',
         'Access-Control-Allow-Methods'=> 'GET'], ['groups'=>'article:id']);
     }
     #[Route('/api/article/add', name:'app_api_article_add', methods:'PUT')]
@@ -54,7 +54,7 @@ class ApiArticleController extends AbstractController
                 //renvoyer un json
                 return $this->json(['erreur'=>'Le Json est vide ou n\'existe pas'], 400, 
                 ['Content-Type'=>'application/json',
-                'Access-Control-Allow-Origin'=> 'localhost',
+                'Access-Control-Allow-Origin'=> '*',
                 'Access-Control-Allow-Methods'=> 'GET'],[]);
             }
             //sérializer le json en tableau
@@ -66,7 +66,7 @@ class ApiArticleController extends AbstractController
                 //renvoyer un json
                 return $this->json(['erreur'=>'L\'article '.$data['titre'].' existe déja en BDD'], 206, 
                 ['Content-Type'=>'application/json',
-                'Access-Control-Allow-Origin'=> 'localhost',
+                'Access-Control-Allow-Origin'=> '*',
                 'Access-Control-Allow-Methods'=> 'GET'],[]);
             }
             //instancier un objet article
@@ -84,7 +84,7 @@ class ApiArticleController extends AbstractController
                     //renvoyer un json
                     return $this->json(['erreur'=>'L\'utilisateur '.$data['user']['email'].' n\'existe pas en BDD'], 401, 
                     ['Content-Type'=>'application/json',
-                    'Access-Control-Allow-Origin'=> 'localhost',
+                    'Access-Control-Allow-Origin'=> '*',
                     'Access-Control-Allow-Methods'=> 'GET'],[]);
                 }
                 //sinon on le set
@@ -101,7 +101,7 @@ class ApiArticleController extends AbstractController
                         //renvoyer un json si elle n'existe pas
                         return $this->json(['erreur'=>'La categorie : '.$value['nom'].' existe pas en BDD'], 400, 
                         ['Content-Type'=>'application/json',
-                        'Access-Control-Allow-Origin'=> 'localhost',
+                        'Access-Control-Allow-Origin'=> '*',
                         'Access-Control-Allow-Methods'=> 'GET'],[]);
                     }
                     //si elle existe
@@ -118,7 +118,7 @@ class ApiArticleController extends AbstractController
             //renvoyer un json
             return $this->json(['erreur'=>'L\'article '.$article->getTitre().' a été ajouté en BDD'], 200, 
             ['Content-Type'=>'application/json',
-            'Access-Control-Allow-Origin'=> 'localhost',
+            'Access-Control-Allow-Origin'=> '*',
             'Access-Control-Allow-Methods'=> 'GET'],[]);
         }
         //lever une exception
@@ -126,7 +126,7 @@ class ApiArticleController extends AbstractController
             //renvoyer un json
             return $this->json(['erreur'=>$e->getMessage()], 400, 
             ['Content-Type'=>'application/json',
-            'Access-Control-Allow-Origin'=> 'localhost',
+            'Access-Control-Allow-Origin'=> '*',
             'Access-Control-Allow-Methods'=> 'GET'],[]);
         }
     }
@@ -141,7 +141,7 @@ class ApiArticleController extends AbstractController
                 //renvoyer un json
                 return $this->json(['erreur'=>'L\'article n\'existe pas en BDD'], 400, 
                 ['Content-Type'=>'application/json',
-                'Access-Control-Allow-Origin'=> 'localhost',
+                'Access-Control-Allow-Origin'=> '*',
                 'Access-Control-Allow-Methods'=> 'GET'],[]);
             }
             //supprimer
@@ -150,13 +150,13 @@ class ApiArticleController extends AbstractController
             //renvoyer un json
             return $this->json(['erreur'=>'L\'article '.$article->getTitre().' a été supprimé en BDD'], 200, 
             ['Content-Type'=>'application/json',
-            'Access-Control-Allow-Origin'=> 'localhost',
+            'Access-Control-Allow-Origin'=> '*',
             'Access-Control-Allow-Methods'=> 'GET'],[]);
         }
         catch(\Exception $e){
             return $this->json(['erreur'=>$e->getMessage()], 500, 
             ['Content-Type'=>'application/json',
-            'Access-Control-Allow-Origin'=> 'localhost',
+            'Access-Control-Allow-Origin'=> '*',
             'Access-Control-Allow-Methods'=> 'GET'],[]);
         }
     }
@@ -172,7 +172,7 @@ class ApiArticleController extends AbstractController
                 //renvoyer un json
                 return $this->json(['erreur'=>'Le Json est vide ou n\'existe pas'], 400, 
                 ['Content-Type'=>'application/json',
-                'Access-Control-Allow-Origin'=> 'localhost',
+                'Access-Control-Allow-Origin'=> '*',
                 'Access-Control-Allow-Methods'=> 'GET'],[]);
             }
             //transformer sérialiser le json en tableau
@@ -184,7 +184,7 @@ class ApiArticleController extends AbstractController
                 //renvoyer un json
                 return $this->json(['erreur'=>'L\'article n\'existe pas en BDD'], 400, 
                 ['Content-Type'=>'application/json',
-                'Access-Control-Allow-Origin'=> 'localhost',
+                'Access-Control-Allow-Origin'=> '*',
                 'Access-Control-Allow-Methods'=> 'GET'],[]);
             }
             //supprimer
@@ -193,13 +193,13 @@ class ApiArticleController extends AbstractController
             //renvoyer un json
             return $this->json(['erreur'=>'L\'article '.$article->getTitre().' a été supprimé en BDD'], 200, 
             ['Content-Type'=>'application/json',
-            'Access-Control-Allow-Origin'=> 'localhost',
+            'Access-Control-Allow-Origin'=> '*',
             'Access-Control-Allow-Methods'=> 'GET'],[]);
         }
         catch(\Exception $e){
             return $this->json(['erreur'=>$e->getMessage()], 500, 
             ['Content-Type'=>'application/json',
-            'Access-Control-Allow-Origin'=> 'localhost',
+            'Access-Control-Allow-Origin'=> '*',
             'Access-Control-Allow-Methods'=> 'GET'],[]);;
         }
     }

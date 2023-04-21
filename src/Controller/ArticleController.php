@@ -13,13 +13,19 @@ use App\Service\Utils;
 use Doctrine\ORM\EntityManagerInterface;
 class ArticleController extends AbstractController
 {
-    #[Route('/article', name: 'app_article')]
-    public function index(): Response
+    #[Route('/article1', name: 'app_article1')]
+    public function inde1x(): Response
     {    
         
         return $this->render('article/index2.html.twig', [
           
 
+        ]);
+    }
+    #[Route('/article', name: 'app_article')]
+    public function index(): Response
+    {   
+        return $this->render('article/article_api.html.twig', [    
         ]);
     }
 
