@@ -1,51 +1,50 @@
 <?php
 
 namespace App\Controller;
-use App\Service\Utils;
-use App\Entity\Contact;
-use App\Form\ContactType;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\HttpFoundation\Request;
+use App\Entity\Contact;
+use App\Form\ContactType;
+use App\Repository\ContactRepository;
+use App\Service\Utils;
+use Doctrine\ORM\EntityManagerInterface;
 class ContactTypeController extends AbstractController
 {
     #[Route('/contact/type', name: 'app_contact')]
-    public function index(Request $request,EntityManagerInterface $em): Response
-    {
+    public function contactForm(EntityManagerInterface $em, Request $request,
+    ContactRepository $repo):Response{
         $msg = "";
-      
-        $contact = new Contact();
-
+        $contact = New Contact();
         $form = $this->createForm(ContactType::class, $contact);
-
-        // Récupération des données du formulaire
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $contact->setContenu( Utils::cleanInputStatic($request->request->all('contact')['contenu']));
-            $contact->setObjet( Utils::cleanInputStatic($request->request->all('contact')['objet']));
-            // $contact->setDate( new \DateTimeImmutable($contact->getDate()));
-            $contact->setNom( Utils::cleanInputStatic($request->request->all('contact')['nom']));
-            $contact->setPrenom( Utils::cleanInputStatic($request->request->all('contact')['prenom']));
-            $mail = Utils::cleanInputStatic($request->request->all('contact')['mail']);
-
-           
-            $em->persist($contact);
-            $em->flush();
-            $msg = 'Message envoyé';
-
-            // Rediriger vers une autre page ou afficher un message de succès
-                    }
-
-        return $this->render('contact_type/index.html.twig', [
-            'controller_name' => 'ContactTypeController',
-            'form' => $form->createView(),
-            'msg' => $msg
+        //test si le formulaire est submit 
+        if($form->isSubmitted()AND $form->isValid()){
+            $recup = $repo->findOneBy(['nom'=>$contact->getNom(), 
+            'mail'=>$contact->getMail(), 
+            'prenom'=>$contact->getPrenom(), 
+            'objet'=>$contact->getObjet(), 
+            'contenu'=>$contact->getContenu() ]);
+            if(!$recup){
+                $contact->setContenu(Utils::cleanInputStatic($request->request->all('contact')['contenu']));
+                $contact->setObjet(Utils::cleanInputStatic($request->request->all('contact')['objet']));
+                $contact->setNom(Utils::cleanInputStatic($request->request->all('contact')['nom']));
+                $contact->setPrenom(Utils::cleanInputStatic($request->request->all('contact')['prenom']));
+                $contact->setMail(Utils::cleanInputStatic($request->request->all('contact')['mail']));
+                $em->persist($contact);
+                $em->flush();
+                $msg = "Demande de contact ajoutée en BDD";
+            }
+            else{
+                $msg = "La demande de contact existe déja en BDD";
+            }
+            
+        }
+        
+        return $this->render('contact_type/index.html.twig',[
+            'message' => $msg,
+            'form'=>$form->createView()
         ]);
     }
 }
-
-
