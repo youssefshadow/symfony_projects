@@ -39,6 +39,7 @@ nav a {
 
 .hero-section {
   height: 80vh;
+  padding: 10% 10%;
   background-color: #dde6ed;
   display: flex;
   justify-content: center;
