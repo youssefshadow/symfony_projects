@@ -14,15 +14,16 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
-
+use App\Repository\UserRepository;
 class AuthAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
-
+    private $repo;
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(private UrlGeneratorInterface $urlGenerator, UserRepository $UserRepo)
     {
+        $this->repo = $UserRepo;
     }
 
     public function authenticate(Request $request): Passport
@@ -47,9 +48,9 @@ class AuthAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         // For example:
-        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
         return new RedirectResponse($this->urlGenerator->generate('app_home'));
-        // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
+        //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl(Request $request): string
