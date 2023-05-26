@@ -62,7 +62,7 @@ class RegisterController extends AbstractController
                 //variable pour le mail 
                 $objet = 'Activation de votre compte';
                 $content = '<p>Pour activer votre compte veuillez cliquer sur l\'url ci-dessous</p>
-                <a href="https://localhost:8000/register/activate/'.$user->getId().'>Activation</a>';
+                <a href="http://127.0.0.1:8000/register/activate/'.$user->getId().'>Activation</a>';
                 $msg = "Le compte : ".$user->getEmail()." a été ajouté en BDD";
                 //on stocke la fonction dans une variable
                 $statut = $messagerie->sendMail($login, $mdp, $objet, $content, $email);
@@ -108,7 +108,7 @@ class RegisterController extends AbstractController
             $content = '<p>Pour activer votre compte veuillez cliquer ci-dessous
             </p><a href="localhost:8000/activate/'.$id.'">Activer</a>';
             //on stocke la fonction dans une variable
-            $status = $messagerie->sendEmail($login, $mdp, $objet, $content, $user->getEmail());
+            $status = $messagerie->sendMail($login, $mdp, $objet, $content, $user->getEmail());
             return new Response($status, 200, []);
         }
         else{
