@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 class Messagerie
 {
-    public function sendMail(string $login, string $mdp, string $recepMail, string $objet, string $body){
+    public function sendMail(string $login, string $mdp,  string $objet, string $body,string $recepMail){
         require '../vendor/autoload.php';
 
 //Create an instance; passing `true` enables exceptions

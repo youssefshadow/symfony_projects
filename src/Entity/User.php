@@ -43,6 +43,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     private Collection $articles;
 
+    #[ORM\Column]
+    private ?bool $activate = null;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -173,5 +176,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
     public function __toString(){
         return $this->nom.''.$this->prenom;
+    }
+
+    public function isActivate(): ?bool
+    {
+        return $this->activate;
+    }
+
+    public function setActivate(bool $activate): self
+    {
+        $this->activate = $activate;
+
+        return $this;
     }
 }
