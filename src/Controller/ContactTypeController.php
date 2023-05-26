@@ -9,13 +9,15 @@ use App\Entity\Contact;
 use App\Form\ContactType;
 use App\Repository\ContactRepository;
 use App\Service\Utils;
+use App\Service\Messagerie;
 use Doctrine\ORM\EntityManagerInterface;
 class ContactTypeController extends AbstractController
 {
     #[Route('/contact/type', name: 'app_contact')]
     public function contactForm(EntityManagerInterface $em, Request $request,
-    ContactRepository $repo):Response{
+    ContactRepository $repo,Messagerie $messagerie):Response{
         $msg = "";
+        $status = "";
         $contact = New Contact();
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
@@ -34,6 +36,17 @@ class ContactTypeController extends AbstractController
                 $contact->setMail(Utils::cleanInputStatic($request->request->all('contact')['mail']));
                 $em->persist($contact);
                 $em->flush();
+                $login = $this->getParameter('login');
+                $mdp = $this->getParameter('mdp');
+                $date = $contact->getDate()->format('d-m-Y');
+                $objet = $contact->getObjet();
+                $content = '<p>Nom: <strong>' . $contact->getNom() . '</strong></p>' .
+               '<p>Prenom: <strong>' . $contact->getPrenom() . '</strong></p>' .
+               '<p>Mail: <strong>' . $contact->getMail() . '</strong></p>' .
+               '<p>Contenu: <strong>' . mb_convert_encoding($contact->getContenu(), 'ISO-8859-1', 'UTF-8') . '</strong></p>' .
+               '<p>Date: <strong>' . $contact->getDate()->format('d-m-Y') . '</strong></p>';
+                $destinataire ='youssef20ben@gmail.com';
+                $statut = $messagerie->sendMail($login, $mdp, $destinataire, $objet, $content);
                 $msg = "Demande de contact ajoutée en BDD";
             }
             else{
