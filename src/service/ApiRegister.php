@@ -3,6 +3,8 @@ namespace App\Service;
 
 use App\Repository\UserRepository;
 use App\Service\Utils;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class ApiRegister
@@ -39,7 +41,7 @@ class ApiRegister
         $issuedAt   = new \DateTimeImmutable();
         $expire     = $issuedAt->modify('+60 minutes')->getTimestamp();
         $serverName = "your.domain.name";
-        $username   = $repo->findOneBy(['email'=>$mail])->getNom();
+        $username   = $repo->findOneBy(['email'=>$email])->getNom();
         //Contenu du token
         $data = [
             'iat'  => $issuedAt->getTimestamp(),         // Timestamp génération du token

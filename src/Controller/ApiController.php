@@ -13,34 +13,36 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class ApiController extends AbstractController
 {
-    #[Route('/api', name: 'app_api')]
-    public function index(): Response
-    {
-        return $this->render('api/index.html.twig', [
-            'controller_name' => 'ApiController',
-        ]);
-    }
-    
     #[Route('/api/verif-connexion', name: 'verif_connexion', methods: ['GET'])]
     public function verifConnexion(
         Request $request,
         UserPasswordHasherInterface $passwordHasher,
         ApiRegister $apiRegister,
         UserRepository $userRepository
-    ): Response{
+    ): Response {
         // Récupérer le mail et le mot de passe depuis la requête GET
         $email = $request->query->get('email');
         $password = $request->query->get('password');
 
-        // Vérifier l'authentification 
+        
+        if (!$email || !$password) {
+            return $this->json(['error' => 'Informations incorrectes'], 400);
+        }
+
+        // Vérifier l'authentification
         $isAuthenticated = $apiRegister->authentification($passwordHasher, $userRepository, $email, $password);
 
-        // Retourner la réponse JSON 
         if ($isAuthenticated) {
-            return $this->json(['connexion' => 'ok'],200, ['Content-Type'=>'application/json',
+            // Récupérer la clé de chiffrement
+            $secretKey = $this->getParameter('token');
+
+            
+            $token = $apiRegister->genToken($email, $secretKey, $userRepository);
+
+            return $this->json(['token' => $token], 200, ['Content-Type'=>'application/json',
             'Access-Control-Allow-Origin'=> '*']);
         } else {
-            return $this->json(['connexion' => 'invalide'],400, ['Content-Type'=>'application/json',
+            return $this->json(['error' => 'Invalid datas'], 400, ['Content-Type'=>'application/json',
             'Access-Control-Allow-Origin'=> '*']);
         }
     }
