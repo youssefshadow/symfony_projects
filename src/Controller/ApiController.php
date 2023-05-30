@@ -37,9 +37,11 @@ class ApiController extends AbstractController
 
         // Retourner la réponse JSON 
         if ($isAuthenticated) {
-            return $this->json(['connexion' => 'ok'],200,[]);
+            return $this->json(['connexion' => 'ok'],200, ['Content-Type'=>'application/json',
+            'Access-Control-Allow-Origin'=> '*']);
         } else {
-            return $this->json(['connexion' => 'invalide'],400,[]);
+            return $this->json(['connexion' => 'invalide'],400, ['Content-Type'=>'application/json',
+            'Access-Control-Allow-Origin'=> '*']);
         }
     }
 }
