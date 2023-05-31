@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controller;
-
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,39 +9,55 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\UserRepository;
 use App\Service\ApiRegister;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-
+use Symfony\Component\Serializer\SerializerInterface;
 class ApiController extends AbstractController
 {
-    #[Route('/api/verif-connexion', name: 'verif_connexion', methods: ['GET'])]
-    public function verifConnexion(
-        Request $request,
-        UserPasswordHasherInterface $passwordHasher,
-        ApiRegister $apiRegister,
-        UserRepository $userRepository
-    ): Response {
-        // Récupérer le mail et le mot de passe depuis la requête GET
-        $email = $request->query->get('email');
-        $password = $request->query->get('password');
-
-        
-        if (!$email || !$password) {
-            return $this->json(['error' => 'Informations incorrectes'], 400);
+    #[Route('/api', name: 'app_api')]
+    public function index(): Response
+    {
+        return $this->render('api/index.html.twig', [
+            'controller_name' => 'ApiController',
+        ]);
+    }
+    #[Route('/api/register', name:'app_api_register')]
+    public function getToken(Request $request, UserRepository $repo,
+        UserPasswordHasherInterface $hash, ApiRegister $apiRegister,
+        SerializerInterface $serialize){
+        //récupérer le json
+        $json = $request->getContent();
+        //test si on n'à pas de json
+        if(!$json){
+            //renvoyer un json
+            return $this->json(['erreur'=>'Le Json est vide ou n\'existe pas'], 400, 
+            ['Content-Type'=>'application/json',
+            'Access-Control-Allow-Origin'=> 'localhost',
+            'Access-Control-Allow-Methods'=> 'GET'],[]);
         }
+        //transformer le json en tableau
+        $data = $serialize->decode($json, 'json');
+       
+        //récupération du mail et du password
+        $mail = $data['email'];
+        $password = $data['password']; 
 
-        // Vérifier l'authentification
-        $isAuthenticated = $apiRegister->authentification($passwordHasher, $userRepository, $email, $password);
-
-        if ($isAuthenticated) {
-            // Récupérer la clé de chiffrement
+        //test si le paramétre mail n'est pas saisi
+        if(!$mail OR !$password){
+            return $this->json(['Error'=>'informations absentes'], 400,['Content-Type'=>'application/json',
+            'Access-Control-Allow-Origin'=> '*'] );
+        }
+        //test si le compte est authentifié
+        if($apiRegister->authentification($hash,$repo,$mail,$password)){
+            //récupération de la clé de chiffrement
             $secretKey = $this->getParameter('token');
-
-            
-            $token = $apiRegister->genToken($email, $secretKey, $userRepository);
-
-            return $this->json(['token' => $token], 200, ['Content-Type'=>'application/json',
+            //génération du token
+            $token = $apiRegister->genToken($mail, $secretKey, $repo);
+            //Retourne le JWT
+            return $this->json(['Token_JWT'=>$token], 200, ['Content-Type'=>'application/json',
             'Access-Control-Allow-Origin'=> '*']);
-        } else {
-            return $this->json(['error' => 'Invalid datas'], 400, ['Content-Type'=>'application/json',
+        }
+        //test si le compte n'est pas authentifié (erreur mail ou password)
+        else{
+            return $this->json(['Error'=>'Informations de connexion incorrectes'], 400, ['Content-Type'=>'application/json',
             'Access-Control-Allow-Origin'=> '*']);
         }
     }
@@ -66,6 +81,5 @@ class ApiController extends AbstractController
             'Access-Control-Allow-Origin'=> '*']);
         }
     }
-   
-
 }
+
