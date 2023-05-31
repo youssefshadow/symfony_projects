@@ -203,5 +203,67 @@ class ApiArticleController extends AbstractController
             'Access-Control-Allow-Methods'=> 'GET'],[]);;
         }
     }
+    #[Route('/api/article/update', name:'app_api_article_update', methods:'PATCH')]
+    public function updateArticle(ArticleRepository $repoArt, Request $request,
+    EntityManagerInterface $em, SerializerInterface $serialize):Response{
+        try {
+            //récupérer le json
+            $json = $request->getContent();
+            //test si on n'à pas de json
+            if(!$json){
+                //renvoyer un json
+                return $this->json(['erreur'=>'Le Json est vide ou n\'existe pas'], 400, 
+                ['Content-Type'=>'application/json',
+                'Access-Control-Allow-Origin'=> 'localhost',
+                'Access-Control-Allow-Methods'=> 'GET'],[]);
+            }
+            //transformer le json en tableau
+            $data = $serialize->decode($json, 'json');
+            //test si les champs sont vides
+            if(empty($data['titre']) OR empty($data['contenu']) OR empty($data['date'])){
+                //renvoyer un json
+                return $this->json(['erreur'=>'Veuillez remplir les valeurs'], 400, 
+                ['Content-Type'=>'application/json',
+                'Access-Control-Allow-Origin'=> 'localhost',
+                'Access-Control-Allow-Methods'=> 'GET'],[]);
+            }
+            //récupérer l'article
+            $article = $repoArt->find($data['id']);
+            //test si l'article
+            if(!$article){
+                //renvoyer un json
+                return $this->json(['erreur'=>'L\'article : '.$data['titre'].' n\'existe pas'], 400, 
+                ['Content-Type'=>'application/json',
+                'Access-Control-Allow-Origin'=> 'localhost',
+                'Access-Control-Allow-Methods'=> 'GET'],[]);
+            }
+            
+            //test si la date est valide :
+            if(!Utils::isValid($data['date'])){
+                 //renvoyer un json
+                return $this->json(['erreur'=>$data['date'].' n\'est pas une date valide'], 400, 
+                ['Content-Type'=>'application/json',
+                'Access-Control-Allow-Origin'=> 'localhost',
+                'Access-Control-Allow-Methods'=> 'GET'],[]);
+            }
+            //mettre à jour l'objet
+            $article->setTitre(Utils::cleanInputStatic($data['titre']));
+            $article->setContenu(Utils::cleanInputStatic($data['contenu']));
+            $article->setDate(new \DateTimeImmutable(Utils::cleanInputStatic($data['date'])));
+            //persister et enregistrer les données
+            $em->persist($article);
+            $em->flush();
+            //renvoyer un json
+            return $this->json(['erreur'=>'L\'article : '.$article->getTitre().'a été mis à jour en BDD'], 200, 
+            ['Content-Type'=>'application/json',
+            'Access-Control-Allow-Origin'=> 'localhost',
+            'Access-Control-Allow-Methods'=> 'GET'],[]);
+        } catch (\Exception $e) {
+            return $this->json(['erreur'=>$e->getMessage()], 500, 
+            ['Content-Type'=>'application/json',
+            'Access-Control-Allow-Origin'=> 'localhost',
+            'Access-Control-Allow-Methods'=> 'GET'],[]);
+        }
+    }
 
 }
