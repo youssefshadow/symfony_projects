@@ -12,14 +12,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 class ApiController extends AbstractController
 {
-    #[Route('/api', name: 'app_api')]
-    public function index(): Response
-    {
-        return $this->render('api/index.html.twig', [
-            'controller_name' => 'ApiController',
-        ]);
-    }
-    #[Route('/api/register', name:'app_api_register')]
+    #[Route('/api/register', name:'app_api_register', methods:'POST')]
     public function getToken(Request $request, UserRepository $repo,
         UserPasswordHasherInterface $hash, ApiRegister $apiRegister,
         SerializerInterface $serialize){
@@ -28,7 +21,7 @@ class ApiController extends AbstractController
         //test si on n'à pas de json
         if(!$json){
             //renvoyer un json
-            return $this->json(['erreur'=>'Le Json est vide ou n\'existe pas'], 400, 
+            return $this->json(['Error'=>'Le Json est vide ou n\'existe pas'], 400, 
             ['Content-Type'=>'application/json',
             'Access-Control-Allow-Origin'=> 'localhost',
             'Access-Control-Allow-Methods'=> 'GET'],[]);
@@ -81,5 +74,8 @@ class ApiController extends AbstractController
             'Access-Control-Allow-Origin'=> '*']);
         }
     }
+    #[Route('api/localToken', name:'app_api_local_token')]
+    public function localToken():Response{
+        return $this->render('api/local.html.twig');
+    }
 }
-

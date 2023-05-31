@@ -39,7 +39,7 @@ class ApiRegister
         require_once('../vendor/autoload.php');
         //Variables pour le token
         $issuedAt   = new \DateTimeImmutable();
-        $expire     = $issuedAt->modify('+60 minutes')->getTimestamp();
+        $expire     = $issuedAt->modify('+1 minutes')->getTimestamp();
         $serverName = "your.domain.name";
         $username   = $repo->findOneBy(['email'=>$email])->getNom();
         //Contenu du token
