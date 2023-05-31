@@ -52,12 +52,26 @@ class ApiRegister
         ];
 
         $token = JWT::encode($data, $secretKey,'HS512');
-        //Pour decoder
-        //$decoded = JWT::decode($jwt, new Key( $secretKey, 'HS512'));
+        
 
         // Retourner le token
         return $token;
     }
+
+    //fonction pour véfifier si le token JWT est valide
+    public function verifyToken($jwt, $secretKey){
+        require_once('../vendor/autoload.php');
+        try {
+        //Décodage du token
+        $token = JWT::decode($jwt, new Key($secretKey, 'HS512'));
+        return true;
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+    }
+    
+
+
 }
 ?>
 

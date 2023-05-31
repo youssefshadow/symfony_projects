@@ -46,4 +46,26 @@ class ApiController extends AbstractController
             'Access-Control-Allow-Origin'=> '*']);
         }
     }
+    #[Route('api/testToken', name:'app_api_testToken')]
+    public function testToken(ApiRegister $apiRegister, Request $request){
+        //récupération du token
+        $jwt = substr($request->server->get('HTTP_AUTHORIZATION'),7);
+        //récupération de la clé de chiffrement
+        $secretKey = $this->getParameter('token');
+        //récupération de la vérification du token
+        $verif = $apiRegister->verifyToken($jwt, $secretKey);
+        //dd($verif);
+        //test sinon retourne l'erreur du token
+        if($verif===true){
+            return $this->json(['Accés authorisé'], 200, ['Content-Type'=>'application/json',
+            'Access-Control-Allow-Origin'=> '*']);
+        }
+        //test si le token est valide
+        else{
+            return $this->json(['Error'=>$verif], 400, ['Content-Type'=>'application/json',
+            'Access-Control-Allow-Origin'=> '*']);
+        }
+    }
+   
+
 }
